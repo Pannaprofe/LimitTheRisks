@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LimitTheRisks
 {
-    class SingleMatchBetInfo
+    class SingleMatchBetInfo: IEquatable<SingleMatchBetInfo>,IComparable<SingleMatchBetInfo>
     {
         public int MatchNum { get; set; }
         public int BetSize { get; set; }
@@ -19,6 +19,44 @@ namespace LimitTheRisks
             this.BetSize = betsize;
             this.MatchResult = matchResult;
             this.Coef = coef;
+        }
+
+
+        public override string ToString()
+        {
+            return "Match Number: " + MatchNum + "   BetSize: " + BetSize + "   MatchResult: " + MatchResult + "   Coef: " + Coef;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            SingleMatchBetInfo objAsPart = obj as SingleMatchBetInfo;
+            if (objAsPart == null) return false;
+            else return Equals(objAsPart);
+        }
+        public int SortByNameAscending(string name1, string name2)
+        {
+
+            return name1.CompareTo(name2);
+        }
+
+        // Default comparer for Part type.
+        public int CompareTo(SingleMatchBetInfo comparePart)
+        {
+            // A null value means that this object is greater.
+            if (comparePart == null)
+                return 1;
+
+            else
+                return this.MatchNum.CompareTo(comparePart.MatchNum);
+        }
+        public override int GetHashCode()
+        {
+            return MatchNum;
+        }
+        public bool Equals(SingleMatchBetInfo other)
+        {
+            if (other == null) return false;
+            return (this.MatchNum.Equals(other.MatchNum));
         }
     }
 }

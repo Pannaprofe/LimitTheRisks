@@ -33,6 +33,7 @@ namespace LimitTheRisks
             GenProbsOtherCo();
             CoefsMarathon = GetCoefs(ProbsMarathon);
             CoefsOtherCo = GetCoefs(ProbsOtherCo);
+            GenerateBet();
         }
 
         /*   public  void FillInTheInputList()
@@ -196,6 +197,8 @@ namespace LimitTheRisks
                 OnePlayerBet.Add(singleMatchBetInfo);
             }
 
+
+            // sort by the match number criterium
             OnePlayerBet.Sort(delegate(SingleMatchBetInfo x, SingleMatchBetInfo y)
             {
                 if (x.MatchNum == null && y.MatchNum == null) return 0;
