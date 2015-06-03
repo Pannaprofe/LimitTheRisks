@@ -10,9 +10,10 @@ namespace LimitTheRisks
 {
     internal class Data
     {
-        public List<Match> allMatches = new List<Match>();
-        public List<SingleMatchBetInfo> OnePlayerBet = new List<SingleMatchBetInfo>();
-        public List<List<SingleMatchBetInfo>> allBetsList = new List<List<SingleMatchBetInfo>>();
+        public List<BetInfo> AllBets = new List<BetInfo>();
+       // public List<Match> allMatches = new List<Match>();
+      //  public List<SingleMatchBetInfo> OnePlayerBet = new List<SingleMatchBetInfo>();
+       // public List<List<SingleMatchBetInfo>> allBetsList = new List<List<SingleMatchBetInfo>>();
         private const int matchesNum = 6;
         private const double R = 0.05;
         private const int NumberOfBets = 10;
@@ -25,7 +26,7 @@ namespace LimitTheRisks
         public Data()
         {
             ObtainData();
-            SubTree tree = new SubTree(ProbsMarathon,CoefsMarathon);
+            SubTree tree = new SubTree(ProbsMarathon,CoefsMarathon,allBetsList);
         }
         private  void ObtainData()
         {
@@ -165,39 +166,46 @@ namespace LimitTheRisks
         private  List<SingleMatchBetInfo> GenerateBet()
         {
             Random random = new Random();
-            var matchesNumber = random.Next(2, 10); // randomize the number of matches in express
+            var matchesNumber = random.Next(1, 10); // randomize the number of matches in express
             List<int> chosenMatches = new List<int>();
+            List<int> outcomes = new List<int>();
+            int betSize = random.Next(1, 10000); //randomize  the size of bet
             for (int i = 0; i < matchesNumber; i++)
             {
-                int matchNum = random.Next(0, matchesNum - 1); //randomize the choice of match
+                int matchNum = random.Next(0, matchesNum - 1); //randomize the choice of match 
                 while (chosenMatches.Contains(matchNum))
                 {
                     matchNum = random.Next(0, matchesNum - 1); //randomize the choice of match
                 }
                 chosenMatches.Add(matchNum);
-
-                int betSize = random.Next(1, 10000); //randomize  the size of bet
-                int matchResult = random.Next(0, 2); // randomize match result
-                double chosenCoef = 0;
-                switch (matchResult)
+                
+                int matchResult = random.Next(0, 2); // randomize match result  0 -> x1;  1 -> x; 2 -> x2;
+                double coef;
+                outcomes.Add(matchResult);
+                
+            }
+            double coef = 1;
+            for (int i = 0; i < chosenMatches.Count; i++)
+            {
+                switch (outcomes[i])
                 {
                     case 0:
-                        chosenCoef = CoefsMarathon[matchNum].X1;
+                        coef *= CoefsMarathon[chosenMatches[i]].X1;
+
                         break;
                     case 1:
-                        chosenCoef = CoefsMarathon[matchNum].X2;
-                        break;;
+                        coef *= CoefsMarathon[chosenMatches[i]].X;
+                        break;
                     case 2:
-                        chosenCoef = CoefsMarathon[matchNum].X;
+                        coef *= CoefsMarathon[chosenMatches[i]].X2;
                         break;
                 }
-                
-                SingleMatchBetInfo singleMatchBetInfo = new SingleMatchBetInfo(matchNum, betSize, matchResult,
-                    chosenCoef);
-                OnePlayerBet.Add(singleMatchBetInfo);
             }
+                
+            BetInfo betinfo = new BetInfo(chosenMatches,outcomes,betSize,c)
+            
 
-
+            /*
             // sort by the match number criterium
             OnePlayerBet.Sort(delegate(SingleMatchBetInfo x, SingleMatchBetInfo y)
             {
@@ -207,6 +215,7 @@ namespace LimitTheRisks
                 else return x.MatchNum.CompareTo(y.MatchNum);
             });
             OnePlayerBet.Sort();
+             */
             return OnePlayerBet;
         }
     }

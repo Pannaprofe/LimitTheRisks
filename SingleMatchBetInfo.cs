@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LimitTheRisks
 {
-    class SingleMatchBetInfo: IEquatable<SingleMatchBetInfo>,IComparable<SingleMatchBetInfo>
+    public class SingleMatchBetInfo: IEquatable<SingleMatchBetInfo>,IComparable<SingleMatchBetInfo>
     {
         public int MatchNum { get; set; }
         public int BetSize { get; set; }

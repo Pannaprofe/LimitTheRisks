@@ -8,9 +8,8 @@ namespace LimitTheRisks
         public Node Win1 { get; set; }
         public Node Win2 { get; set; }
         public Node Draw { get; set; }
-
         public double Coef { get; set; }
-
+        public double Level { get; set; }
         public double Prob { get; set; }
         public double LocalCoef { get; set; }
         public double LocalProb { get; set; }

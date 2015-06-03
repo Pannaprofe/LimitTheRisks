@@ -15,9 +15,6 @@ namespace LimitTheRisks
         static void Main(string[] args)
         {
             Data data = new Data();
-            
         }
-
-        
    }
 }
