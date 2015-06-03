@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic;  // List<>
 using System.Data;
-using System.IO;
-using System.Text;
+using System.IO;   // StreamWriter
+using System.Text;  //StringBuilder
 
 namespace LimitTheRisks
 {
@@ -14,17 +14,17 @@ namespace LimitTheRisks
         public Node Top;
         public Node CurNode;
         private int TreeLevels;
-        private double LocalCoef;
-        private double level;
         private StringBuilder stringBuilder = new StringBuilder();
-        private int CriticalNodeNumber = 0; 
+        private int CriticalNodeNumber = 0;
+        private List<SingleMatchBetInfo> Bets;
         //private StreamWriter streamWriter = new StreamWriter("Output.txt");
 
-        public SubTree(List<MatchParams> probs, List<MatchParams> coefs)
+        public SubTree(List<MatchParams> probs, List<MatchParams> coefs)//, List<List<SingleMatchBetInfo>> bets)
         {
             Tree = new Node();
             this.Probs = probs;
             this.Coefs = coefs;
+            //this.Bets = bets;
             Tree.LocalCoef = 1;
             Tree.LocalProb = 1;
             TreeLevels = probs.Count;
@@ -33,10 +33,10 @@ namespace LimitTheRisks
             CurNode = Top;
             BuildTheTree(ref Tree);          
             PassTheTree(Top);
-            var str = stringBuilder.ToString();
+            var output = stringBuilder.ToString();
             using (StreamWriter streamWriter = new StreamWriter("123.txt"))
             {
-                streamWriter.WriteLine(str);
+                streamWriter.WriteLine(output);
             }
         }
 
@@ -122,13 +122,7 @@ namespace LimitTheRisks
 
         private void PassTheTree(Node tree)
         {
-          /*  using (StreamWriter streamWriter = new StreamWriter("123.txt"))
-            {
-                streamWriter.WriteLine("_____________________________________");
-                streamWriter.WriteLine(tree.LocalCoef + " " + tree.LocalProb);
-            }
-           */
-            stringBuilder.AppendLine(tree.NodeNum.ToString());
+            stringBuilder.AppendLine(tree.NodeNum.ToString() + " " + tree.LocalProb);
             if (tree.Win1 == null)  // the level is the last
             {
                 return;
@@ -136,6 +130,11 @@ namespace LimitTheRisks
             PassTheTree(tree.Win1);
             PassTheTree(tree.Draw);
             PassTheTree(tree.Win2);
+        }
+
+        private void PassTheTreeSelectively(Node tree)
+        {
+            
         }
     }
 }

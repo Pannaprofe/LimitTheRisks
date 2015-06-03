@@ -11,8 +11,8 @@ namespace LimitTheRisks
     internal class Data
     {
         public List<Match> allMatches = new List<Match>();
-        private List<SingleMatchBetInfo> OnePlayerBet = new List<SingleMatchBetInfo>();
-        private List<List<SingleMatchBetInfo>> allBetsList = new List<List<SingleMatchBetInfo>>();
+        public List<SingleMatchBetInfo> OnePlayerBet = new List<SingleMatchBetInfo>();
+        public List<List<SingleMatchBetInfo>> allBetsList = new List<List<SingleMatchBetInfo>>();
         private const int matchesNum = 6;
         private const double R = 0.05;
         private const int NumberOfBets = 10;
@@ -195,6 +195,15 @@ namespace LimitTheRisks
                     chosenCoef);
                 OnePlayerBet.Add(singleMatchBetInfo);
             }
+
+            OnePlayerBet.Sort(delegate(SingleMatchBetInfo x, SingleMatchBetInfo y)
+            {
+                if (x.MatchNum == null && y.MatchNum == null) return 0;
+                else if (x.MatchNum == null) return -1;
+                else if (y.MatchNum == null) return 1;
+                else return x.MatchNum.CompareTo(y.MatchNum);
+            });
+            OnePlayerBet.Sort();
             return OnePlayerBet;
         }
     }
