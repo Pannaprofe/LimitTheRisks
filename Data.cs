@@ -99,7 +99,7 @@ namespace LimitTheRisks
                     double x = ProbsMarathon[i].X + random.NextDouble()*(2*delta) - delta;
 
                     MatchParams matchParams = new MatchParams(x1, x2, x);
-                    ProbsMarathon.Add(matchParams);
+                    ProbsOtherCo.Add(matchParams);
                 }
             }
             catch (Exception exception)

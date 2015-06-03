@@ -4,3 +4,9 @@ D:\Work\LimitTheRisks\LimitTheRisks\bin\Debug\LimitTheRisks.exe
 D:\Work\LimitTheRisks\LimitTheRisks\bin\Debug\LimitTheRisks.pdb
 D:\Work\LimitTheRisks\LimitTheRisks\obj\Debug\LimitTheRisks.exe
 D:\Work\LimitTheRisks\LimitTheRisks\obj\Debug\LimitTheRisks.pdb
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Debug\LimitTheRisks.exe.config
+E:\Сытов\LimitTheRisks\LimitTheRisks\obj\Debug\LimitTheRisks.exe
+E:\Сытов\LimitTheRisks\LimitTheRisks\obj\Debug\LimitTheRisks.pdb
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Debug\LimitTheRisks.exe
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Debug\LimitTheRisks.pdb
+E:\Сытов\LimitTheRisks\LimitTheRisks\obj\Debug\LimitTheRisks.csprojResolveAssemblyReference.cache

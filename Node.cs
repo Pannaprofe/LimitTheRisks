@@ -14,5 +14,6 @@ namespace LimitTheRisks
         public double Prob { get; set; }
         public double LocalCoef { get; set; }
         public double LocalProb { get; set; }
+        public int NodeNum { get; set; }
     }
 }

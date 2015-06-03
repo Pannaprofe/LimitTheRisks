@@ -17,6 +17,7 @@ namespace LimitTheRisks
         private double LocalCoef;
         private double level;
         private StringBuilder stringBuilder = new StringBuilder();
+        private int CriticalNodeNumber = 0; 
         //private StreamWriter streamWriter = new StreamWriter("Output.txt");
 
         public SubTree(List<MatchParams> probs, List<MatchParams> coefs)
@@ -26,13 +27,28 @@ namespace LimitTheRisks
             this.Coefs = coefs;
             Tree.LocalCoef = 1;
             Tree.LocalProb = 1;
-            TreeLevels = 2;
-            BuildTheTree(Tree);
-            PassTheTree(Tree);
+            TreeLevels = probs.Count;
+            GetCriticalNodeNumber();
+            Top = Tree;
+            CurNode = Top;
+            BuildTheTree(ref Tree);          
+            PassTheTree(Top);
             var str = stringBuilder.ToString();
+            using (StreamWriter streamWriter = new StreamWriter("123.txt"))
+            {
+                streamWriter.WriteLine(str);
+            }
         }
 
-        private void BuildTheTree(Node tree)
+        private void GetCriticalNodeNumber()
+        {
+            for (int i=0; i<TreeLevels;i++)
+            {
+                CriticalNodeNumber = CriticalNodeNumber * 3 + 3; 
+            }
+        }
+
+        private void BuildTheTree(ref Node tree)
         {
             bool stop = false;
             int level = 0;
@@ -53,6 +69,7 @@ namespace LimitTheRisks
                         node.Parent = tree;
                         tree = node;
                         nodesNum++;
+                        tree.NodeNum = nodesNum;
                         level++;
                     }
                     else if (tree.Draw == null)
@@ -66,6 +83,7 @@ namespace LimitTheRisks
                         node.Parent = tree;
                         tree = node;
                         nodesNum++;
+                        tree.NodeNum = nodesNum;
                         level++;
                     }
                     else if (tree.Win2 == null)
@@ -79,17 +97,19 @@ namespace LimitTheRisks
                         node.Parent = tree;
                         tree = node;
                         nodesNum++;
+                        tree.NodeNum = nodesNum;
                         level++;
                     }
+                    else
+                    {
+                        Tree = Tree.Parent;
+                        level--;
+                    }
                 }
-                else
-                {
-                    Tree = Tree.Parent;
-                    level--;
-                }
+                
                 if (level == TreeLevels)
                 {
-                    if (nodesNum == Math.Pow(3, TreeLevels))
+                    if (nodesNum == CriticalNodeNumber)
                         stop = true;
                     else
                     {
@@ -108,7 +128,7 @@ namespace LimitTheRisks
                 streamWriter.WriteLine(tree.LocalCoef + " " + tree.LocalProb);
             }
            */
-            stringBuilder.AppendLine(tree.LocalCoef + " " + tree.LocalProb);
+            stringBuilder.AppendLine(tree.NodeNum.ToString());
             if (tree.Win1 == null)  // the level is the last
             {
                 return;
