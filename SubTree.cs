@@ -37,7 +37,7 @@ namespace LimitTheRisks
             CurNode = Top;
 
             BuildTheTree(ref Tree);          
-            //PassTheTree(Top);
+            PassTheTree(Top);
             Output();
 
             var output = stringBuilder.ToString();
@@ -173,9 +173,9 @@ namespace LimitTheRisks
                 tmp.RemoveAt(tmp.Count - 1);
                 return;
             }
-            PassTheTree(tree.Win1);
-            PassTheTree(tree.Draw);
-            PassTheTree(tree.Win2);
+            PassTheTreeSelectively(tree.Win1,playerBet);
+            PassTheTreeSelectively(tree.Draw,playerBet);
+            PassTheTreeSelectively(tree.Win2,playerBet);
         }
     }
 }

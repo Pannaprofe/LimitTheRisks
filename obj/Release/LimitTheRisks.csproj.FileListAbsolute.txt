@@ -1,0 +1,5 @@
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Release\LimitTheRisks.exe.config
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Release\LimitTheRisks.exe
+E:\Сытов\LimitTheRisks\LimitTheRisks\bin\Release\LimitTheRisks.pdb
+E:\Сытов\LimitTheRisks\LimitTheRisks\obj\Release\LimitTheRisks.exe
+E:\Сытов\LimitTheRisks\LimitTheRisks\obj\Release\LimitTheRisks.pdb

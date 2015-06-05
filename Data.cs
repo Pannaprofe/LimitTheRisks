@@ -136,7 +136,7 @@ namespace LimitTheRisks
         }
 
 
-        private  List<string> ReadMatchesDataFromFile()
+     /*   private  List<string> ReadMatchesDataFromFile()
         {
             List<string> linesList = new List<string>();
             try
@@ -164,6 +164,7 @@ namespace LimitTheRisks
             }
             return linesList;
         }
+      */
 
         private  BetInfo GenerateBet()
         {
@@ -203,7 +204,7 @@ namespace LimitTheRisks
                         break;
                 }
             }
-
+            chosenMatches.Sort();
             BetInfo betinfo = new BetInfo(chosenMatches, outcomes, betSize, coef);
             coef = 1;
 
