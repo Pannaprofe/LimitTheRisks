@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LimitTheRisks
 {
-    class Matches
+    public class Matches
     {
         public List<int> MatchList { get; set; }
         public List<int> Outcomes { get; set; }

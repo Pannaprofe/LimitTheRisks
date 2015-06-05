@@ -21,12 +21,13 @@ namespace LimitTheRisks
         public List<MatchParams> ProbsOtherCo = new List<MatchParams>();
         public List<MatchParams> CoefsMarathon = new List<MatchParams>();
         public List<MatchParams> CoefsOtherCo = new List<MatchParams>();
+        private Random RandomNum = new Random();   // the way to make this variable global is the only possible as random numbers are equal to the first random number 
 
 
         public Data()
         {
             ObtainData();
-            SubTree tree = new SubTree(ProbsMarathon,CoefsMarathon,allBetsList);
+            SubTree tree = new SubTree(ProbsMarathon,CoefsMarathon,AllBets);
         }
         private  void ObtainData()
         {
@@ -34,7 +35,7 @@ namespace LimitTheRisks
             GenProbsOtherCo();
             CoefsMarathon = GetCoefs(ProbsMarathon);
             CoefsOtherCo = GetCoefs(ProbsOtherCo);
-            GenerateBet();
+            GenAllBetsOfAllPlayers();
         }
 
         /*   public  void FillInTheInputList()
@@ -66,10 +67,11 @@ namespace LimitTheRisks
 
         private void GenAllBetsOfAllPlayers()
         {
+            BetInfo OnePlayerBet;
             for (int i = 0; i < NumberOfBets; i++)
             {
                 OnePlayerBet = GenerateBet();
-                allBetsList.Add(OnePlayerBet);
+                AllBets.Add(OnePlayerBet);
             }
         }
 
@@ -163,27 +165,27 @@ namespace LimitTheRisks
             return linesList;
         }
 
-        private  List<SingleMatchBetInfo> GenerateBet()
+        private  BetInfo GenerateBet()
         {
-            Random random = new Random();
-            var matchesNumber = random.Next(1, 10); // randomize the number of matches in express
+            
+            var matchesNumber = RandomNum.Next(1, 10); // randomize the number of matches in express
             List<int> chosenMatches = new List<int>();
             List<int> outcomes = new List<int>();
-            int betSize = random.Next(1, 10000); //randomize  the size of bet
+            int betSize = RandomNum.Next(1, 10000); //randomize  the size of bet
             for (int i = 0; i < matchesNumber; i++)
             {
-                int matchNum = random.Next(0, matchesNum - 1); //randomize the choice of match 
+                int matchNum = RandomNum.Next(0, matchesNum - 1); //randomize the choice of match 
                 while (chosenMatches.Contains(matchNum))
                 {
-                    matchNum = random.Next(0, matchesNum - 1); //randomize the choice of match
+                    matchNum = RandomNum.Next(0, matchesNum - 1); //randomize the choice of match
                 }
                 chosenMatches.Add(matchNum);
                 
-                int matchResult = random.Next(0, 2); // randomize match result  0 -> x1;  1 -> x; 2 -> x2;
-                double coef;
+                int matchResult = RandomNum.Next(0, 2); // randomize match result  0 -> x1;  1 -> x; 2 -> x2;
                 outcomes.Add(matchResult);
                 
             }
+
             double coef = 1;
             for (int i = 0; i < chosenMatches.Count; i++)
             {
@@ -201,9 +203,9 @@ namespace LimitTheRisks
                         break;
                 }
             }
-                
-            BetInfo betinfo = new BetInfo(chosenMatches,outcomes,betSize,c)
-            
+
+            BetInfo betinfo = new BetInfo(chosenMatches, outcomes, betSize, coef);
+            coef = 1;
 
             /*
             // sort by the match number criterium
@@ -216,7 +218,7 @@ namespace LimitTheRisks
             });
             OnePlayerBet.Sort();
              */
-            return OnePlayerBet;
+            return betinfo;
         }
     }
 }

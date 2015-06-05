@@ -10,16 +10,19 @@ namespace LimitTheRisks
     {
         private List<MatchParams> Probs;
         private List<MatchParams> Coefs;
+        private List<BetInfo> Bets;
+        private List<int> tmp = new List<int>();
+
         private Node Tree;
         private Node Top;
         private Node CurNode;
+
         private int TreeLevels;
         private StringBuilder stringBuilder = new StringBuilder();
-        private int CriticalNodeNumber = 0;
-        private List<List<SingleMatchBetInfo>> Bets;
-        //private StreamWriter streamWriter = new StreamWriter("Output.txt");
+        private int CriticalNodeNumber;
+        private bool isOrderedSublist = true;
 
-        public SubTree(List<MatchParams> probs, List<MatchParams> coefs, List<List<SingleMatchBetInfo>> bets)
+        public SubTree(List<MatchParams> probs, List<MatchParams> coefs, List<BetInfo> bets)
         {
             this.Probs = probs;
             this.Coefs = coefs;
@@ -34,7 +37,8 @@ namespace LimitTheRisks
             CurNode = Top;
 
             BuildTheTree(ref Tree);          
-            PassTheTree(Top);
+            //PassTheTree(Top);
+            Output();
 
             var output = stringBuilder.ToString();
             using (StreamWriter streamWriter = new StreamWriter("123.txt"))
@@ -46,11 +50,12 @@ namespace LimitTheRisks
 
         private void Output()
         {
-            foreach (List<SingleMatchBetInfo> playerbet in Bets)
+            foreach (BetInfo playerbet in Bets)
             {
-                PassTheTreeSelectively(Tree,playerbet);
+                PassTheTreeSelectively(Top,playerbet);
             }
         }
+        //returns number of nodes in the tree, excluding top element
         private void GetCriticalNodeNumber()
         {
             for (int i=0; i<TreeLevels;i++)
@@ -143,13 +148,29 @@ namespace LimitTheRisks
             PassTheTree(tree.Win2);
         }
 
-        private void PassTheTreeSelectively(Node tree, List<SingleMatchBetInfo> playerBet)
+        //non recursive pass of the tree
+        private void PassTheTreeSelectively(Node tree, BetInfo playerBet)
         {
-            int index = 0;
-            if (tree.Level == playerBet)
-            stringBuilder.AppendLine(tree.NodeNum.ToString() + " " + tree.LocalProb);
+           // stringBuilder.AppendLine(tree.NodeNum.ToString() + " " + tree.LocalProb);
+            tmp.Add(tree.Level);
             if (tree.Win1 == null)  // the level is the last
             {
+                foreach (int elem in playerBet.MatchesAndOutcomes.MatchList)
+                {
+                    if (!tmp.Contains(elem))
+                    {
+                        isOrderedSublist = false;
+                        break;
+                    }
+                }
+                if (isOrderedSublist)
+                {
+                    foreach (int elem in playerBet.MatchesAndOutcomes.MatchList)
+                    {
+                        stringBuilder.AppendLine(elem.ToString());
+                    }
+                }
+                tmp.RemoveAt(tmp.Count - 1);
                 return;
             }
             PassTheTree(tree.Win1);

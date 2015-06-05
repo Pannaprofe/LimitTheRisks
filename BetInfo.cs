@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LimitTheRisks
 {
-    class BetInfo
+    public class BetInfo
     {
         public Matches MatchesAndOutcomes { get; set; }
         public int BetSize { get; set; }
@@ -14,6 +14,7 @@ namespace LimitTheRisks
 
         public BetInfo(List<int> matchList, List<int> outcomes, int betSize, double coef)
         {
+            MatchesAndOutcomes = new Matches();
             this.MatchesAndOutcomes.MatchList = matchList;
             this.MatchesAndOutcomes.Outcomes = outcomes;
             this.BetSize = betSize;
